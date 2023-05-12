@@ -1,0 +1,32 @@
+﻿@{
+}
+
+@model BugTr.Models.Bug
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Add Comment</title>
+</head>
+<body>
+    <div class="container">
+        <h2 class="mt-3">Add Comment</h2>
+
+        <form asp-action="AddComment" method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
+
+            <div class="form-group">
+                <label for="commentText">Comment</label>
+                <textarea class="form-control" id="commentText" name="commentText" rows="3" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success">Add Comment</button>
+        </form>
+    </div>
+</body>
+
+</html>
+

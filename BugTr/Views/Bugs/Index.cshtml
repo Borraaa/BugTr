@@ -1,0 +1,57 @@
+﻿@model IEnumerable<BugTr.Models.Bug>
+@{
+    ViewData["Title"] = "Bug List";
+}
+
+<h1>@ViewData["Title"]</h1>
+<!DOCTYPE html>
+<html lang="en">
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Created At</th>
+            <th>User Name</th>
+            <th>Role</th>
+            <th>Actions</th>
+            <th>Assign User</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var bug in Model)
+        {
+            <tr>
+                <td>@bug.Id</td>
+                <td>@bug.Title</td>
+                <td>@bug.Description</td>
+                <td>@bug.Status</td>
+                <td>@bug.CreatedAt.ToString("dd/MM/yyyy")</td>
+                <td>@bug.User.UserName</td>
+                <td>@bug.User.Role</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Bugs", new { id = bug.Id })">Edit</a> |
+                    <a href="@Url.Action("Details", "Bugs", new { id = bug.Id })">Details</a> |
+                    <a href="@Url.Action("Delete", "Bugs", new { id = bug.Id })">Delete</a>
+                    </td>
+                     <td>
+                        <form asp-action="AssignUser" method="post">
+                            <select asp-for="@bug.UserId" class="form-control">
+                                <option value="">Assign User</option>
+                                @foreach (var user in Model)
+                                {
+                                    <option value="@user.Id">@user.User</option>
+                                }
+                            </select>
+                            <input type="submit" value="Save" class="btn btn-primary mt-2" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+</html>

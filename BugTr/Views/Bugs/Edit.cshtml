@@ -1,0 +1,76 @@
+﻿
+@using Microsoft.AspNetCore.Html;
+@using BugTr.Models;
+
+
+@model BugTr.Models.Bug
+@{
+    var comments = Model.Comments;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Edit Bug</title>
+</head>
+<div class="container">
+    <h2 class="mt-3">Bug Details</h2>
+
+    <div class="bug-details">
+        <div class="bug-property">
+            <h4>Project ID:</h4>
+            <p>@Model.ProjectId</p>
+        </div>
+        <div class="bug-property">
+            <h4>Title:</h4>
+            <p>@Model.Title</p>
+        </div>
+        <div class="bug-property">
+            <h4>Description:</h4>
+            <p>@Model.Description</p>
+        </div>
+        <div class="bug-property">
+            <h4>Status:</h4>
+            <p>@Model.Status</p>
+        </div>
+        <div class="bug-property">
+            <h4>User Name:</h4>
+            <p>@Model.User.Name</p>
+        </div>
+    </div>
+
+    <h3 class="mt-3">Comments</h3>
+    <div class="comment-list">
+        @if (comments != null && comments.Any())
+        {
+            foreach (var comment in comments)
+            {
+                <div class="comment-item">
+                    <p>@comment.Text</p>
+                    <small>By @comment.User.Name (@comment.User.Role) at @comment.CreatedAt</small>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="comment-item">No comments yet.</div>
+        }
+    </div>
+
+    <h3 class="mt-3">Add Comment</h3>
+    <form asp-action="AddComment" method="post">
+        <input type="hidden" name="id" value="@Model.Id" />
+
+        <div class="form-group">
+            <label for="commentText">Comment:</label>
+            <textarea class="form-control" id="commentText" name="commentText" rows="3" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success">Add Comment</button>
+    </form>
+</div>
+
+</html>
